@@ -18,6 +18,6 @@ int main(void)
 	{
 		non_shell();
 	}
-	return (0);
+	return (EXIT_FAILURE);
 }
 
