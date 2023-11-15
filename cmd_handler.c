@@ -13,7 +13,7 @@ void ctrl_c(int signum)
 	{
 		signal(SIGINT, ctrl_c);
 		showchar("\n");
-		showchar("> ");
+		showchar("$ ");
 		fflush(stdout);
 	}
 }
