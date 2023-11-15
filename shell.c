@@ -59,7 +59,7 @@ int call_shell(void)
 		{
 			if (my_strncmp(command, "exit", 4) == 0)
 			{
-				return (EXIT_FAILURE);
+				return (0);
 			}
 			else if (my_strncmp(command, "cd", 2) == 0)
 			{
