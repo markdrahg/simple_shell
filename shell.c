@@ -54,7 +54,7 @@ int call_shell(void)
 	while (1)
 	{
 		signal(SIGINT, ctrl_c);
-		showchar("> ");
+		showchar("$ ");
 		if (_getline(command, MAX_LINE_LENGTH, STDIN_FILENO) != NULL)
 		{
 			if (my_strncmp(command, "exit", 4) == 0)
