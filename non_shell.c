@@ -2,8 +2,21 @@
 
 #define MAX_COMMAND_LENGTH 1024
 
+
 /**
- * my_execl - Takes command and
+ * nonshell_error - error printer
+ *
+ * Return: (Error)
+ */
+
+int nonshell_error(void)
+{
+	perror("read");
+	return (EXIT_FAILURE);
+}
+
+/**
+ * my_execl100 - Takes command and
  *  it path then makes a run
  * @path: the path
  * @args: the argument
@@ -11,7 +24,7 @@
  * Return: (0)
  */
 
-int my_execl(const char *path, char *const args[])
+int my_execl100(const char *path, char *const args[])
 {
 	pid_t child_pid;
 	int status;
@@ -35,70 +48,55 @@ int my_execl(const char *path, char *const args[])
 	return (0);
 }
 
+
 /**
- * non_shell - initializes the
+ * non_shell2 - initializes the
  *  shell free runner
+ * @input_fd: the path
  *
  * Return: (0)
  */
 
-int non_shell(void)
+int non_shell2(int input_fd)
 {
 	char command[MAX_COMMAND_LENGTH];
 	size_t command_len;
 	pid_t child_pid;
 	int status;
 
-	if (_getline(command, MAX_COMMAND_LENGTH, STDIN_FILENO) == NULL)
+	ssize_t read_bytes = read(input_fd, command, MAX_COMMAND_LENGTH);
+
+	if (read_bytes < 0)
 	{
-		perror("fgets");
-		return (1);
+		nonshell_error();
 	}
-	command_len = my_strlen(command);
+	command_len = (size_t)read_bytes;
+
 	if (command_len > 0 && command[command_len - 1] == '\n')
 	{
 		command[command_len - 1] = '\0';
+		command_len--;
 	}
 	child_pid = fork();
 	if (child_pid < 0)
 	{
-		perror("fork");
-		return (1);
+		nonshell_error();
 	}
 	else if (child_pid == 0)
 	{
-		char *cmd_args[2];
+		char *cmd_args[4];
 
-		cmd_args[0] = command;
-		cmd_args[1] = NULL;
-		if (my_execl(command, cmd_args) == -1)
+		cmd_args[0] = "/bin/sh";
+		cmd_args[1] = "-c";
+		cmd_args[2] = command;
+		cmd_args[3] = NULL;
+		if (my_execvp2("/bin/sh", cmd_args) == -1)
 		{
-			perror("execl");
-			exit(1);
+			nonshell_error();
 		}
-	}
-	else
+	} else
 	{
 		waitpid(child_pid, &status, 0);
 	}
-	return (0);
-}
-
-/**
- * my_strlen - returns the lenght
- *  of a string
- * @str: the passed on string
- *
- * Return: (0)
- */
-
-int my_strlen(const char *str)
-{
-	int length = 0;
-
-	while (str[length] != '\0')
-	{
-		length++;
-	}
-	return (length);
+	return (EXIT_SUCCESS);
 }

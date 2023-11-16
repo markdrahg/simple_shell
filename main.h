@@ -47,8 +47,7 @@ int custom_execvp(const char *, char *const args[]);
 int my_execvp2(const char *, char *const args[]);
 
 /*non_shell.c*/
-int non_shell(void);
-int my_strlen(const char *);
+int non_shell2(int);
 
 /*cd.c*/
 int my_cd2(char *);
