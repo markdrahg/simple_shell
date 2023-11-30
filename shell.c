@@ -54,16 +54,21 @@ int call_shell(void)
 	while (1)
 	{
 		signal(SIGINT, ctrl_c);
-		showchar("$ ");
+		showchar("> ");
 		if (_getline(command, MAX_LINE_LENGTH, STDIN_FILENO) != NULL)
 		{
 			if (my_strncmp(command, "exit", 4) == 0)
 			{
-				return (0);
+				return (EXIT_FAILURE);
 			}
 			else if (my_strncmp(command, "cd", 2) == 0)
 			{
 				showchar("CD Activated\n");
+				my_cd(command);
+			}
+			else
+			{
+				execute_command(command);
 			}
 		}
 		else
