@@ -64,7 +64,6 @@ int call_shell(void)
 			else if (my_strncmp(command, "cd", 2) == 0)
 			{
 				showchar("CD Activated\n");
-				my_cd(command);
 			}
 			else
 			{
