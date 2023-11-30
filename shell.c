@@ -65,10 +65,6 @@ int call_shell(void)
 			{
 				showchar("CD Activated\n");
 			}
-			else
-			{
-				execute_command(command);
-			}
 		}
 		else
 		{
