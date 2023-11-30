@@ -20,6 +20,6 @@ int main(void)
 
 		non_shell2(input_fd);
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
